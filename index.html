@@ -28,16 +28,13 @@
       <a href="admin.html" id="adminLink" style="display:none;">Dashboard</a>
 
       <!-- LANGUAGE -->
-<div class="menu-dropdown lang-dropdown">
-  <div class="lang-icon">
-    A<span>अ</span>
-  </div>
-  <div class="dropdown-menu">
-    <span onclick="setLanguage('en')">English</span>
-    <span onclick="setLanguage('hi')">हिन्दी</span>
-  </div>
-</div>
-
+      <div class="menu-dropdown lang-dropdown">
+        <div class="lang-icon">A<span>अ</span></div>
+        <div class="dropdown-menu">
+          <span onclick="setLanguage('en')">English</span>
+          <span onclick="setLanguage('hi')">हिन्दी</span>
+        </div>
+      </div>
     </nav>
   </div>
 </header>
@@ -45,8 +42,8 @@
 <!-- HERO -->
 <section class="hero" id="hero">
   <div class="container hero-content">
-    <h1>Trusted Transport & Logistics Services Across India</h1>
-    <p>📍 Indore, Madhya Pradesh | ✓ Verified Transporter</p>
+    <h1 id="heroTitle">Trusted Transport & Logistics Services Across India</h1>
+    <p id="heroSub">📍 Indore, Madhya Pradesh | ✓ Verified Transporter</p>
 
     <div class="badges">
       <span>Verified</span>
@@ -64,31 +61,6 @@
       Bais Express Logistics is a trusted transport company based in Indore,
       providing reliable logistics services across India.
     </p>
-
-    <h3 class="subheading">Our Associated Partners</h3>
-
-    <div class="partner-logos">
-      <div class="partner-card">
-        <img src="images/Adani wilmar logo.jpg">
-        <p>Adani Wilmar Ltd.</p>
-      </div>
-      <div class="partner-card">
-        <img src="images/udaan logo.png">
-        <p>Udaan App</p>
-      </div>
-      <div class="partner-card">
-        <img src="images/Agrawal Distilleries logo.jpeg">
-        <p>Agrawal Distilleries Pvt. Ltd.</p>
-      </div>
-      <div class="partner-card">
-        <img src="images/Mount everest breweries ltd logo.jpeg">
-        <p>Mount Everest Breweries Ltd.</p>
-      </div>
-      <div class="partner-card">
-        <img src="images/Nimbus post logo.jpeg">
-        <p>Nimbus Shipping Services Pvt. Ltd.</p>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -134,11 +106,11 @@
 
       <!-- REQUEST CALL FORM -->
       <form id="contactForm">
-        <input type="text" placeholder="Name" required>
-        <input type="tel" placeholder="Phone" required>
-        <input type="text" placeholder="Pickup Location">
-        <input type="text" placeholder="Drop Location">
-        <textarea placeholder="Cargo Details"></textarea>
+        <input type="text" id="name" placeholder="Name" required>
+        <input type="tel" id="phone" placeholder="Phone" required>
+        <input type="text" id="pickup" placeholder="Pickup Location">
+        <input type="text" id="drop" placeholder="Drop Location">
+        <textarea id="message" placeholder="Cargo Details"></textarea>
 
         <button type="submit" class="btn">Request Call</button>
       </form>
@@ -146,87 +118,149 @@
   </div>
 </section>
 
-<!-- LOCATIONS -->
+<!-- ALL INDIA SERVICE LOCATIONS -->
 <section class="locations-section">
-  <h2>Service Locations</h2>
+  <h2>All India Transport Service Locations</h2>
+
   <div class="locations-grid">
+    <!-- STATES -->
     <ul>
-      <li>Bangalore</li><li>Hyderabad</li><li>Mumbai</li><li>Chennai</li>
-      <li>Delhi</li><li>Gurgaon</li><li>Noida</li><li>Coimbatore</li>
+      <li>Madhya Pradesh</li>
+      <li>Maharashtra</li>
+      <li>Gujarat</li>
+      <li>Rajasthan</li>
+      <li>Uttar Pradesh</li>
+      <li>Delhi NCR</li>
+      <li>Punjab</li>
+      <li>Haryana</li>
     </ul>
+
     <ul>
-      <li>Navi Mumbai</li><li>Thane</li><li>Rajkot</li><li>Surat</li>
-      <li>Indore</li><li>Bhopal</li><li>Vizag</li><li>Patna</li>
+      <li>Bihar</li>
+      <li>West Bengal</li>
+      <li>Odisha</li>
+      <li>Chhattisgarh</li>
+      <li>Jharkhand</li>
+      <li>Karnataka</li>
+      <li>Tamil Nadu</li>
+      <li>Telangana</li>
     </ul>
+
     <ul>
-      <li>Ghaziabad</li><li>Bhiwandi</li><li>Ahmedabad</li><li>Agra</li>
-      <li>Kanpur</li><li>Pune</li><li>Nashik</li><li>Nagpur</li>
+      <li>Andhra Pradesh</li>
+      <li>Kerala</li>
+      <li>Goa</li>
+      <li>Assam</li>
+      <li>Meghalaya</li>
+      <li>Tripura</li>
+      <li>Manipur</li>
+      <li>Nagaland</li>
     </ul>
+
+    <!-- CITIES -->
     <ul>
-      <li>Chandigarh</li><li>Udaipur</li><li>Kolkata</li><li>Jaipur</li>
-      <li>Lucknow</li><li>Varanasi</li><li>Howrah</li><li>Gandhidham</li>
+      <li>Indore</li>
+      <li>Bhopal</li>
+      <li>Mumbai</li>
+      <li>Pune</li>
+      <li>Nagpur</li>
+      <li>Delhi</li>
+      <li>Noida</li>
+      <li>Gurgaon</li>
+    </ul>
+
+    <ul>
+      <li>Ahmedabad</li>
+      <li>Surat</li>
+      <li>Rajkot</li>
+      <li>Jaipur</li>
+      <li>Udaipur</li>
+      <li>Kanpur</li>
+      <li>Lucknow</li>
+      <li>Varanasi</li>
+    </ul>
+
+    <ul>
+      <li>Bangalore</li>
+      <li>Chennai</li>
+      <li>Hyderabad</li>
+      <li>Vijayawada</li>
+      <li>Coimbatore</li>
+      <li>Kochi</li>
+      <li>Trivandrum</li>
+      <li>Madurai</li>
+    </ul>
+
+    <ul>
+      <li>Kolkata</li>
+      <li>Howrah</li>
+      <li>Patna</li>
+      <li>Ranchi</li>
+      <li>Raipur</li>
+      <li>Bhubaneswar</li>
+      <li>Guwahati</li>
+      <li>Silchar</li>
     </ul>
   </div>
 </section>
 
+
 <!-- FOOTER -->
 <footer class="footer">
-  <p>© 2025 Bais Express Logistics | All Rights Reserved</p>
+  <span class="footer-line">
+    © 2025 Bais Express Logistics | All Rights Reserved
+  </span>
 </footer>
 
-<script>
-  // Admin login check
-  const user = localStorage.getItem("user");
-  const pass = localStorage.getItem("pass");
 
-  if (user && pass) {
-    document.getElementById("adminLink").style.display = "inline-block";
-    document.getElementById("loginLink").style.display = "none";
-  }
-
-  // Request Call (LIVE BACKEND)
-  const form = document.getElementById("contactForm");
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const inputs = form.querySelectorAll("input, textarea");
-
-    const data = {
-      name: inputs[0].value,
-      phone: inputs[1].value,
-      pickup: inputs[2].value,
-      drop: inputs[3].value,
-      message: inputs[4].value
-    };
-
-    try {
-      const res = await fetch(
-  "https://bais-logistics-website.onrender.com/api/enquiry",
-  {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  }
-);
-
-
-      const result = await res.json();
-
-      if (result.success) {
-        alert("✅ Request submitted successfully");
-        form.reset();
-      } else {
-        alert("❌ Something went wrong");
-      }
-    } catch {
-      alert("❌ Server error");
-    }
-  });
-</script>
+<!-- ================= SCRIPT ================= -->
 <script src="script.js"></script>
+
+<script>
+/* ===== ADMIN LOGIN CHECK ===== */
+const user = localStorage.getItem("user");
+const pass = localStorage.getItem("pass");
+
+if (user && pass) {
+  document.getElementById("adminLink").style.display = "inline-block";
+  document.getElementById("loginLink").style.display = "none";
+}
+
+/* ===== REQUEST CALL API ===== */
+document.getElementById("contactForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const data = {
+    name: name.value,
+    phone: phone.value,
+    pickup: pickup.value,
+    drop: drop.value,
+    message: message.value
+  };
+
+  try {
+    const res = await fetch(
+      "https://bais-logistics-website.onrender.com/api/enquiry",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      }
+    );
+
+    const result = await res.json();
+
+    if (result.success) {
+      alert("✅ Request sent successfully");
+      e.target.reset();
+    } else {
+      alert("❌ Failed to send request");
+    }
+  } catch (err) {
+    alert("❌ Server error");
+  }
+});
+</script>
 
 </body>
 </html>
