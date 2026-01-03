@@ -5,7 +5,9 @@ const nodemailer = require("nodemailer");
 const { Pool } = require("pg");
 const path = require("path");
 const crypto = require("crypto");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
+
+
 
 const app = express();
 
