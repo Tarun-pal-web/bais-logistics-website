@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const { Pool } = require("pg");
 const bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
 
 const app = express();
 
@@ -56,7 +57,18 @@ const pool = new Pool({
 })();
 
 /* ===============================
-   CREATE ENQUIRY
+   EMAIL SETUP
+================================ */
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  }
+});
+
+/* ===============================
+   CREATE ENQUIRY + EMAIL
 ================================ */
 app.post("/api/enquiry", async (req, res) => {
   const { name, phone, pickup, drop, message } = req.body;
@@ -66,6 +78,7 @@ app.post("/api/enquiry", async (req, res) => {
   }
 
   try {
+    // DB INSERT
     await pool.query(
       `INSERT INTO enquiries
       (name, phone, pickup, drop_location, message, status)
@@ -73,9 +86,24 @@ app.post("/api/enquiry", async (req, res) => {
       [name, phone, pickup || null, drop || null, message || null]
     );
 
+    // ===== MAIL SEND (ADDED) =====
+    await transporter.sendMail({
+      from: `"Bais Express Logistics" <${process.env.EMAIL_USER}>`,
+      to: process.env.EMAIL_USER,
+      subject: "🚛 New Transport Enquiry",
+      html: `
+        <h3>New Enquiry Received</h3>
+        <p><b>Name:</b> ${name}</p>
+        <p><b>Phone:</b> ${phone}</p>
+        <p><b>Pickup:</b> ${pickup || "-"}</p>
+        <p><b>Drop:</b> ${drop || "-"}</p>
+        <p><b>Message:</b> ${message || "-"}</p>
+      `
+    });
+
     res.json({ success: true });
   } catch (err) {
-    console.error(err);
+    console.error("Enquiry error:", err);
     res.status(500).json({ success: false });
   }
 });
@@ -104,7 +132,7 @@ app.post("/api/admin/login", async (req, res) => {
     }
 
     res.json({ success: true });
-  } catch (err) {
+  } catch {
     res.json({ success: false });
   }
 });
@@ -152,19 +180,10 @@ app.delete("/api/admin/enquiries/:id", async (req, res) => {
     res.json({ success: false });
   }
 });
-//======================================================================================
-const nodemailer = require("nodemailer");
 
 /* ===============================
-   EMAIL TEST
+   TEST MAIL ROUTE
 ================================ */
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
 app.get("/api/test-mail", async (req, res) => {
   try {
     await transporter.sendMail({
@@ -174,12 +193,13 @@ app.get("/api/test-mail", async (req, res) => {
       text: "✅ Agar ye mail aa rahi hai, toh email setup sahi hai."
     });
 
-    res.json({ success: true, message: "Test mail sent" });
+    res.json({ success: true });
   } catch (err) {
     console.error("Mail error:", err);
-    res.status(500).json({ success: false, error: err.message });
+    res.status(500).json({ success: false });
   }
 });
+
 /* ===============================
    SERVER START
 ================================ */
