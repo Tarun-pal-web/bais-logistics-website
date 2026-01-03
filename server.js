@@ -4,6 +4,7 @@ const cors = require("cors");
 const { Pool } = require("pg");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
+const crypto = require("crypto");
 
 const app = express();
 
@@ -78,7 +79,6 @@ app.post("/api/enquiry", async (req, res) => {
   }
 
   try {
-    // DB INSERT
     await pool.query(
       `INSERT INTO enquiries
       (name, phone, pickup, drop_location, message, status)
@@ -86,7 +86,6 @@ app.post("/api/enquiry", async (req, res) => {
       [name, phone, pickup || null, drop || null, message || null]
     );
 
-    // ===== MAIL SEND (ADDED) =====
     await transporter.sendMail({
       from: `"Bais Express Logistics" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER,
@@ -138,7 +137,81 @@ app.post("/api/admin/login", async (req, res) => {
 });
 
 /* ===============================
-   ADMIN – GET ENQUIRIES
+   FORGOT PASSWORD (SEND MAIL)
+================================ */
+app.post("/api/admin/forgot-password", async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const result = await pool.query(
+      "SELECT id FROM admins WHERE email=$1",
+      [email]
+    );
+
+    if (result.rows.length === 0) {
+      return res.json({ success: true }); // security
+    }
+
+    const token = crypto.randomBytes(32).toString("hex");
+
+    await pool.query(
+      "UPDATE admins SET reset_token=$1, reset_expiry=NOW()+INTERVAL '15 minutes' WHERE email=$2",
+      [token, email]
+    );
+
+    const resetLink = `https://tarun-pal-web.github.io/bais-logistics-website/reset-password.html?token=${token}`;
+
+    await transporter.sendMail({
+      from: `"Bais Express Logistics" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: "🔐 Reset Admin Password",
+      html: `
+        <h3>Password Reset</h3>
+        <p>Click below link to reset password:</p>
+        <a href="${resetLink}">${resetLink}</a>
+        <p><b>Valid for 15 minutes</b></p>
+      `
+    });
+
+    res.json({ success: true });
+  } catch (err) {
+    console.error("Forgot password error:", err);
+    res.status(500).json({ success: false });
+  }
+});
+
+/* ===============================
+   RESET PASSWORD
+================================ */
+app.post("/api/admin/reset-password", async (req, res) => {
+  const { token, password } = req.body;
+
+  try {
+    const result = await pool.query(
+      "SELECT id FROM admins WHERE reset_token=$1 AND reset_expiry > NOW()",
+      [token]
+    );
+
+    if (result.rows.length === 0) {
+      return res.json({ msg: "Invalid or expired token" });
+    }
+
+    const hashed = await bcrypt.hash(password, 10);
+
+    await pool.query(
+      "UPDATE admins SET password=$1, reset_token=NULL, reset_expiry=NULL WHERE id=$2",
+      [hashed, result.rows[0].id]
+    );
+
+    res.json({ msg: "Password reset successful" });
+  } catch (err) {
+    console.error("Reset error:", err);
+    res.status(500).json({ msg: "Server error" });
+  }
+});
+
+/* ===============================
+   ADMIN – ENQUIRIES
 ================================ */
 app.get("/api/admin/enquiries", async (req, res) => {
   try {
@@ -151,9 +224,6 @@ app.get("/api/admin/enquiries", async (req, res) => {
   }
 });
 
-/* ===============================
-   ADMIN – UPDATE STATUS
-================================ */
 app.put("/api/admin/enquiries/:id", async (req, res) => {
   try {
     await pool.query(
@@ -166,9 +236,6 @@ app.put("/api/admin/enquiries/:id", async (req, res) => {
   }
 });
 
-/* ===============================
-   ADMIN – DELETE
-================================ */
 app.delete("/api/admin/enquiries/:id", async (req, res) => {
   try {
     await pool.query(
@@ -182,7 +249,7 @@ app.delete("/api/admin/enquiries/:id", async (req, res) => {
 });
 
 /* ===============================
-   TEST MAIL ROUTE
+   TEST MAIL
 ================================ */
 app.get("/api/test-mail", async (req, res) => {
   try {
@@ -190,9 +257,8 @@ app.get("/api/test-mail", async (req, res) => {
       from: `"Bais Express Logistics" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER,
       subject: "Test Mail – Bais Express",
-      text: "✅ Agar ye mail aa rahi hai, toh email setup sahi hai."
+      text: "✅ Email setup working fine"
     });
-
     res.json({ success: true });
   } catch (err) {
     console.error("Mail error:", err);
