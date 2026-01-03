@@ -1,13 +1,26 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const nodemailer = require("nodemailer");
 const { Pool } = require("pg");
-const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 
 const app = express();
 
+/* ===============================
+   MIDDLEWARE
+================================ */
+app.use(cors({
+  origin: [
+    "https://adorable-cuchufli-b8c50b.netlify.app",
+    "http://localhost:5500",
+    "http://127.0.0.1:5500"
+  ]
+}));
+app.use(express.json());
+
+/* ===============================
+   HEALTH CHECK
+================================ */
 app.get("/", (req, res) => {
   res.json({
     status: "Backend is running",
@@ -15,19 +28,8 @@ app.get("/", (req, res) => {
   });
 });
 
-
 /* ===============================
-   MIDDLEWARE (VERY IMPORTANT)
-================================ */
-app.use(cors({
-  origin: "*",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type"]
-}));
-app.use(express.json());
-
-/* ===============================
-   DATABASE (SUPABASE / POSTGRES)
+   DATABASE (SUPABASE)
 ================================ */
 const pool = new Pool({
   host: process.env.DB_HOST,
@@ -51,13 +53,13 @@ const pool = new Pool({
 })();
 
 /* ===============================
-   CUSTOMER – CREATE ENQUIRY
+   CREATE ENQUIRY
 ================================ */
 app.post("/api/enquiry", async (req, res) => {
   const { name, phone, pickup, drop, message } = req.body;
 
   if (!name || !phone) {
-    return res.json({ success: false, msg: "Name & phone required" });
+    return res.json({ success: false });
   }
 
   try {
@@ -68,38 +70,15 @@ app.post("/api/enquiry", async (req, res) => {
       [name, phone, pickup || null, drop || null, message || null]
     );
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
-
-    await transporter.sendMail({
-      from: `"Bais Express Logistics" <${process.env.EMAIL_USER}>`,
-      to: process.env.OWNER_EMAIL,
-      subject: "🚛 New Call Request",
-      html: `
-        <h2>📞 New Call Request</h2>
-        <p><b>Name:</b> ${name}</p>
-        <p><b>Phone:</b> ${phone}</p>
-        <p><b>Pickup:</b> ${pickup || "N/A"}</p>
-        <p><b>Drop:</b> ${drop || "N/A"}</p>
-        <p><b>Cargo:</b> ${message || "N/A"}</p>
-      `
-    });
-
     res.json({ success: true });
-
   } catch (err) {
     console.error(err);
-    res.json({ success: false });
+    res.status(500).json({ success: false });
   }
 });
 
 /* ===============================
-   ADMIN – LOGIN
+   ADMIN LOGIN
 ================================ */
 app.post("/api/admin/login", async (req, res) => {
   const { email, password } = req.body;
@@ -122,9 +101,7 @@ app.post("/api/admin/login", async (req, res) => {
     }
 
     res.json({ success: true });
-
   } catch (err) {
-    console.error(err);
     res.json({ success: false });
   }
 });
@@ -159,7 +136,7 @@ app.put("/api/admin/enquiries/:id", async (req, res) => {
 });
 
 /* ===============================
-   ADMIN – DELETE ENQUIRY
+   ADMIN – DELETE
 ================================ */
 app.delete("/api/admin/enquiries/:id", async (req, res) => {
   try {
@@ -170,95 +147,6 @@ app.delete("/api/admin/enquiries/:id", async (req, res) => {
     res.json({ success: true });
   } catch {
     res.json({ success: false });
-  }
-});
-
-/* ===============================
-   ADMIN – FORGOT PASSWORD
-================================ */
-app.post("/api/admin/forgot-password", async (req, res) => {
-  const { email } = req.body;
-
-  try {
-    const result = await pool.query(
-      "SELECT id FROM admins WHERE email=$1",
-      [email]
-    );
-
-    if (result.rows.length === 0) {
-      return res.json({ msg: "Admin not found" });
-    }
-
-    const token = crypto.randomBytes(32).toString("hex");
-    const expiry = new Date(Date.now() + 15 * 60 * 1000);
-
-    await pool.query(
-      `UPDATE admins
-       SET reset_token=$1, reset_token_expiry=$2
-       WHERE email=$3`,
-      [token, expiry, email]
-    );
-
-    const resetLink =
-      `https://deluxe-marzipan-8c8cdb.netlify.app/reset-password.html?token=${token}`;
-
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
-
-    await transporter.sendMail({
-      from: `"Bais Express Logistics" <${process.env.EMAIL_USER}>`,
-      to: email,
-      subject: "Reset Admin Password",
-      html: `<a href="${resetLink}">${resetLink}</a>`
-    });
-
-    res.json({ msg: "Reset link sent" });
-
-  } catch (err) {
-    console.error(err);
-    res.json({ msg: "Server error" });
-  }
-});
-
-/* ===============================
-   ADMIN – RESET PASSWORD
-================================ */
-app.post("/api/admin/reset-password", async (req, res) => {
-  const { token, password } = req.body;
-
-  try {
-    const result = await pool.query(
-      `SELECT id FROM admins
-       WHERE reset_token=$1
-       AND reset_token_expiry > NOW()`,
-      [token]
-    );
-
-    if (result.rows.length === 0) {
-      return res.json({ msg: "Invalid or expired token" });
-    }
-
-    const hashed = await bcrypt.hash(password, 10);
-
-    await pool.query(
-      `UPDATE admins
-       SET password=$1,
-           reset_token=NULL,
-           reset_token_expiry=NULL
-       WHERE id=$2`,
-      [hashed, result.rows[0].id]
-    );
-
-    res.json({ msg: "Password reset successful" });
-
-  } catch (err) {
-    console.error(err);
-    res.json({ msg: "Server error" });
   }
 });
 
