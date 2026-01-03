@@ -152,7 +152,34 @@ app.delete("/api/admin/enquiries/:id", async (req, res) => {
     res.json({ success: false });
   }
 });
+//======================================================================================
+const nodemailer = require("nodemailer");
 
+/* ===============================
+   EMAIL TEST
+================================ */
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  }
+});
+app.get("/api/test-mail", async (req, res) => {
+  try {
+    await transporter.sendMail({
+      from: `"Bais Express Logistics" <${process.env.EMAIL_USER}>`,
+      to: process.env.EMAIL_USER,
+      subject: "Test Mail – Bais Express",
+      text: "✅ Agar ye mail aa rahi hai, toh email setup sahi hai."
+    });
+
+    res.json({ success: true, message: "Test mail sent" });
+  } catch (err) {
+    console.error("Mail error:", err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
 /* ===============================
    SERVER START
 ================================ */
