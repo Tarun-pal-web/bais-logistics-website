@@ -7,7 +7,7 @@ const bcrypt = require("bcryptjs");
 const app = express();
 
 /* ===============================
-   MIDDLEWARE (FIXED & SIMPLE)
+   MIDDLEWARE
 ================================ */
 app.use(cors({
   origin: [
@@ -53,13 +53,13 @@ const pool = new Pool({
 })();
 
 /* ===============================
-   CREATE ENQUIRY (WORKING)
+   CREATE ENQUIRY
 ================================ */
 app.post("/api/enquiry", async (req, res) => {
   const { name, phone, pickup, drop, message } = req.body;
 
   if (!name || !phone) {
-    return res.json({ success: false, msg: "Name & phone required" });
+    return res.json({ success: false });
   }
 
   try {
@@ -70,12 +70,9 @@ app.post("/api/enquiry", async (req, res) => {
       [name, phone, pickup || null, drop || null, message || null]
     );
 
-    console.log("📩 Enquiry saved:", { name, phone });
-
     res.json({ success: true });
-
   } catch (err) {
-    console.error("❌ Enquiry error:", err);
+    console.error(err);
     res.status(500).json({ success: false });
   }
 });
@@ -104,9 +101,51 @@ app.post("/api/admin/login", async (req, res) => {
     }
 
     res.json({ success: true });
-
   } catch (err) {
-    console.error(err);
+    res.json({ success: false });
+  }
+});
+
+/* ===============================
+   ADMIN – GET ENQUIRIES
+================================ */
+app.get("/api/admin/enquiries", async (req, res) => {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM enquiries ORDER BY created_at DESC"
+    );
+    res.json(result.rows);
+  } catch {
+    res.status(500).json([]);
+  }
+});
+
+/* ===============================
+   ADMIN – UPDATE STATUS
+================================ */
+app.put("/api/admin/enquiries/:id", async (req, res) => {
+  try {
+    await pool.query(
+      "UPDATE enquiries SET status='Completed' WHERE id=$1",
+      [req.params.id]
+    );
+    res.json({ success: true });
+  } catch {
+    res.json({ success: false });
+  }
+});
+
+/* ===============================
+   ADMIN – DELETE
+================================ */
+app.delete("/api/admin/enquiries/:id", async (req, res) => {
+  try {
+    await pool.query(
+      "DELETE FROM enquiries WHERE id=$1",
+      [req.params.id]
+    );
+    res.json({ success: true });
+  } catch {
     res.json({ success: false });
   }
 });
