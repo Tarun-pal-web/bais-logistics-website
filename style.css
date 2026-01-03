@@ -366,3 +366,42 @@ input, textarea{
     flex-direction: column;
   }
 }
+.locations-section {
+  background:  #0f4c81;
+  padding: 40px 20px;
+}
+
+.locations-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.locations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16px, 1fr));
+  gap: 20px;
+}
+
+.locations-grid ul {
+  list-style: none;
+  padding: 0;
+}
+
+.locations-grid li {
+  font-size: 14px;
+  padding: 4px 0;
+}
+.footer-line {
+  display: inline-block;
+  background: transparent;
+  color: #ffffff;
+  padding: 8px 18px;
+  border-radius: 999px;           /* nav jaisa pill */
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid rgba(255,255,255,0.4);
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+
