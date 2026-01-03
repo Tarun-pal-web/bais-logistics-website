@@ -231,13 +231,12 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const data = {
-    name: name.value,
-    phone: phone.value,
-    pickup: pickup.value,
-    drop: drop.value,
-    message: message.value
-  };
-
+  name: document.getElementById("name").value,
+  phone: document.getElementById("phone").value,
+  pickup: document.getElementById("pickup").value,
+  drop: document.getElementById("drop").value,
+  message: document.getElementById("message").value
+};
   try {
     const res = await fetch(
       "https://bais-logistics-website.onrender.com/api/enquiry",
