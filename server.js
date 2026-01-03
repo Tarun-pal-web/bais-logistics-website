@@ -10,11 +10,9 @@ const app = express();
    MIDDLEWARE
 ================================ */
 app.use(cors({
-  origin: [
-    "https://adorable-cuchufli-b8c50b.netlify.app",
-    "http://localhost:5500",
-    "http://127.0.0.1:5500"
-  ]
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type"]
 }));
 app.use(express.json());
 
