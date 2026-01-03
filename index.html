@@ -202,13 +202,16 @@
 
     try {
       const res = await fetch(
-        "https://bais-logistics-website.onrender.com/api/enquiry",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
-        }
-      );
+  "https://bais-logistics-website.onrender.com/api/enquiry",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  }
+);
+
 
       const result = await res.json();
 

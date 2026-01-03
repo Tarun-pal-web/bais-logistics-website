@@ -3,27 +3,23 @@ const express = require("express");
 const cors = require("cors");
 const nodemailer = require("nodemailer");
 const { Pool } = require("pg");
-const path = require("path");
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
-
-
 
 const app = express();
 
 /* ===============================
-   MIDDLEWARE
+   MIDDLEWARE (VERY IMPORTANT)
 ================================ */
-app.use(cors());
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type"]
+}));
 app.use(express.json());
 
 /* ===============================
-   FRONTEND
-================================ */
-app.use(express.static(path.join(__dirname, "../frontend")));
-
-/* ===============================
-   DATABASE (SUPABASE POOLER)
+   DATABASE (SUPABASE / POSTGRES)
 ================================ */
 const pool = new Pool({
   host: process.env.DB_HOST,
@@ -31,7 +27,7 @@ const pool = new Pool({
   database: process.env.DB_NAME,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  ssl: false
+  ssl: { rejectUnauthorized: false }
 });
 
 /* ===============================
@@ -47,13 +43,6 @@ const pool = new Pool({
 })();
 
 /* ===============================
-   HOME
-================================ */
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/index.html"));
-});
-
-/* ===============================
    CUSTOMER – CREATE ENQUIRY
 ================================ */
 app.post("/api/enquiry", async (req, res) => {
@@ -66,8 +55,8 @@ app.post("/api/enquiry", async (req, res) => {
   try {
     await pool.query(
       `INSERT INTO enquiries
-       (name, phone, pickup, drop_location, message, status)
-       VALUES ($1,$2,$3,$4,$5,'Pending')`,
+      (name, phone, pickup, drop_location, message, status)
+      VALUES ($1,$2,$3,$4,$5,'Pending')`,
       [name, phone, pickup || null, drop || null, message || null]
     );
 
@@ -79,20 +68,17 @@ app.post("/api/enquiry", async (req, res) => {
       }
     });
 
-    // ✅ FULL DETAILS EMAIL
     await transporter.sendMail({
       from: `"Bais Express Logistics" <${process.env.EMAIL_USER}>`,
       to: process.env.OWNER_EMAIL,
-      subject: "🚛 New Call Request - Bais Express Logistics",
+      subject: "🚛 New Call Request",
       html: `
         <h2>📞 New Call Request</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>Pickup:</strong> ${pickup || "N/A"}</p>
-        <p><strong>Drop:</strong> ${drop || "N/A"}</p>
-        <p><strong>Cargo:</strong> ${message || "N/A"}</p>
-        <hr>
-        <small>Bais Express Logistics Website</small>
+        <p><b>Name:</b> ${name}</p>
+        <p><b>Phone:</b> ${phone}</p>
+        <p><b>Pickup:</b> ${pickup || "N/A"}</p>
+        <p><b>Drop:</b> ${drop || "N/A"}</p>
+        <p><b>Cargo:</b> ${message || "N/A"}</p>
       `
     });
 
@@ -117,21 +103,21 @@ app.post("/api/admin/login", async (req, res) => {
     );
 
     if (result.rows.length === 0) {
-      return res.json({ success: false, msg: "Invalid credentials" });
+      return res.json({ success: false });
     }
 
     const admin = result.rows[0];
     const match = await bcrypt.compare(password, admin.password);
 
     if (!match) {
-      return res.json({ success: false, msg: "Invalid credentials" });
+      return res.json({ success: false });
     }
 
     res.json({ success: true });
 
   } catch (err) {
     console.error(err);
-    res.json({ success: false, msg: "Server error" });
+    res.json({ success: false });
   }
 });
 
@@ -150,7 +136,7 @@ app.get("/api/admin/enquiries", async (req, res) => {
 });
 
 /* ===============================
-   ADMIN – MARK COMPLETE
+   ADMIN – UPDATE STATUS
 ================================ */
 app.put("/api/admin/enquiries/:id", async (req, res) => {
   try {
@@ -206,7 +192,7 @@ app.post("/api/admin/forgot-password", async (req, res) => {
     );
 
     const resetLink =
-      `http://localhost:5500/frontend/reset-password.html?token=${token}`;
+      `https://deluxe-marzipan-8c8cdb.netlify.app/reset-password.html?token=${token}`;
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -220,11 +206,7 @@ app.post("/api/admin/forgot-password", async (req, res) => {
       from: `"Bais Express Logistics" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: "Reset Admin Password",
-      html: `
-        <p>Click below to reset password:</p>
-        <a href="${resetLink}">${resetLink}</a>
-        <p>Valid for 15 minutes</p>
-      `
+      html: `<a href="${resetLink}">${resetLink}</a>`
     });
 
     res.json({ msg: "Reset link sent" });
