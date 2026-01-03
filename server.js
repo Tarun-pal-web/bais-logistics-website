@@ -13,9 +13,13 @@ const app = express();
    🔥 MUST BE ON TOP
 ================================ */
 app.use(cors({
-  origin: "*",
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type"]
+  origin: [
+    "https://adorable-cuchufi-b8c50b.netlify.app",
+    "http://localhost:5500",
+    "http://127.0.0.1:5500"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
 }));
 app.use(express.json());
 
