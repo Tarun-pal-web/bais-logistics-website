@@ -8,11 +8,14 @@ async function loginUser() {
     return;
   }
 
-  const res = await fetch("http://localhost:5000/api/admin/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password })
-  });
+  const res = await fetch(
+    "https://bais-logistics-website.onrender.com/api/admin/login",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    }
+  );
 
   const data = await res.json();
 
@@ -20,6 +23,6 @@ async function loginUser() {
     localStorage.setItem("adminLoggedIn", "true");
     window.location.href = "admin.html";
   } else {
-    msg.innerText = data.msg || "Login failed";
+    msg.innerText = "Login failed";
   }
 }
