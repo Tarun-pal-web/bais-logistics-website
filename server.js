@@ -86,19 +86,20 @@ app.post("/api/enquiry", async (req, res) => {
       }
     });
 
-    await transporter.sendMail({
-      from: `"Bais Express Logistics" <${process.env.EMAIL_USER}>`,
-      to: process.env.OWNER_EMAIL,
-      subject: "🚛 New Call Request",
-      html: `
-        <h2>📞 New Call Request</h2>
-        <p><b>Name:</b> ${name}</p>
-        <p><b>Phone:</b> ${phone}</p>
-        <p><b>Pickup:</b> ${pickup || "N/A"}</p>
-        <p><b>Drop:</b> ${drop || "N/A"}</p>
-        <p><b>Cargo:</b> ${message || "N/A"}</p>
-      `
-    });
+    // await transporter.sendMail({
+    //   from: `"Bais Express Logistics" <${process.env.EMAIL_USER}>`,
+    //   to: process.env.OWNER_EMAIL,
+    //   subject: "🚛 New Call Request",
+    //   html: `
+    //     <h2>📞 New Call Request</h2>
+    //     <p><b>Name:</b> ${name}</p>
+    //     <p><b>Phone:</b> ${phone}</p>
+    //     <p><b>Pickup:</b> ${pickup || "N/A"}</p>
+    //     <p><b>Drop:</b> ${drop || "N/A"}</p>
+    //     <p><b>Cargo:</b> ${message || "N/A"}</p>
+    //   `
+    // });
+    console.log("📩 Enquiry received:", { name, phone, pickup, drop, message });
 
     res.json({ success: true });
 
