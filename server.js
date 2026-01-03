@@ -8,6 +8,14 @@ const bcrypt = require("bcryptjs");
 
 const app = express();
 
+app.get("/", (req, res) => {
+  res.json({
+    status: "Backend is running",
+    service: "Bais Express Logistics API"
+  });
+});
+
+
 /* ===============================
    MIDDLEWARE (VERY IMPORTANT)
 ================================ */
