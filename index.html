@@ -235,18 +235,41 @@ if (user && pass) {
 }
 
 /* REQUEST CALL API */
+document.getElementById("contactForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
+  const pickup = document.getElementById("pickup").value;
+  const drop = document.getElementById("drop").value;
+  const message = document.getElementById("message").value;
+
+  const text =
+    `New Transport Enquiry:%0A` +
+    `Name: ${name}%0A` +
+    `Phone: ${phone}%0A` +
+    `Pickup: ${pickup}%0A` +
+    `Drop: ${drop}%0A` +
+    `Cargo: ${message}`;
+
+  window.open(
+    `https://wa.me/919644344044?text=${text}`,
+    "_blank"
+  );
+});
 document.getElementById("contactForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const data = {
-    name: name.value,
-    phone: phone.value,
-    pickup: pickup.value,
-    drop: drop.value,
-    message: message.value
-  };
+  const name = document.getElementById("name").value;
+  const phone = document.getElementById("phone").value;
+  const pickup = document.getElementById("pickup").value;
+  const drop = document.getElementById("drop").value;
+  const message = document.getElementById("message").value;
+
+  const data = { name, phone, pickup, drop, message };
 
   try {
+    // 1️⃣ SAVE TO DASHBOARD (BACKEND)
     const res = await fetch(
       "https://bais-logistics-website.onrender.com/api/enquiry",
       {
@@ -258,13 +281,34 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
 
     const result = await res.json();
 
-    if (result.success) {
-      alert("✅ Request sent successfully");
-      e.target.reset();
-    } else {
-      alert("❌ Failed to send request");
+    if (!result.success) {
+      alert("❌ Request save failed");
+      return;
     }
-  } catch {
+
+    // 2️⃣ SEND TO WHATSAPP
+    const whatsappNumber = "919644344044"; // owner number
+    const text = 
+`🚛 *New Transport Enquiry*
+
+👤 Name: ${name}
+📞 Phone: ${phone}
+📍 Pickup: ${pickup || "-"}
+🏁 Drop: ${drop || "-"}
+📦 Cargo: ${message || "-"}`;
+
+    const whatsappURL =
+      "https://wa.me/" +
+      whatsappNumber +
+      "?text=" +
+      encodeURIComponent(text);
+
+    window.open(whatsappURL, "_blank");
+
+    alert("✅ Enquiry sent successfully");
+    e.target.reset();
+
+  } catch (err) {
     alert("❌ Server error");
   }
 });
