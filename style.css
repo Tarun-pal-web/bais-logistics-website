@@ -1,12 +1,3 @@
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-}
 /* =========================
    GLOBAL RESET
 ========================= */
@@ -15,6 +6,12 @@ body {
   padding:0;
   box-sizing:border-box;
   font-family:'Poppins', sans-serif;
+}
+
+body{
+  margin:0;
+  padding:0;
+  overflow-x:hidden;
 }
 
 /* =========================
@@ -46,7 +43,6 @@ body::after{
   position:sticky;
   top:0;
   z-index:1000;
-  /* logo bahar nahi jayega */
 }
 
 .nav{
@@ -54,12 +50,11 @@ body::after{
   align-items:center;
   justify-content:space-between;
   height:150px;
-  overflow:visible;   /* ⭐ VERY IMPORTANT */
+  overflow:visible;
 }
 
-
 /* =========================
-   LOGO (MAIN FIX)
+   LOGO
 ========================= */
 .logo{
   display:flex;
@@ -69,11 +64,9 @@ body::after{
 
 .logo img{
   width:160px;
-  height:auto;
-  max-height:150px;   /* IMPORTANT: bahar nahi niklega */
+  max-height:150px;
   object-fit:contain;
 }
-
 
 .logo span{
   font-size:20px;
@@ -107,9 +100,8 @@ nav a:hover{
 ========================= */
 .lang-dropdown{
   position:relative;
-  z-index:9999;   /* ⭐ dropdown upar dikhega */
+  z-index:9999;
 }
-
 
 .lang-icon{
   width:34px;
@@ -132,9 +124,7 @@ nav a:hover{
   border-radius:6px;
   display:none;
   min-width:120px;
-  z-index:9999;
 }
-
 
 .lang-dropdown:hover .dropdown-menu{
   display:block;
@@ -153,18 +143,18 @@ nav a:hover{
 /* =========================
    HERO SECTION
 ========================= */
-.hero {
-  background: rgba(15,76,129,0.75);
-  color: #fff;
-  text-align: center;
-  padding: 90px 15px;   /* 👈 yahi main fix hai */
-  width: 100%;
-  max-width: 100%;
+.hero{
+  background:rgba(15,76,129,0.75);
+  color:#fff;
+  text-align:center;
+  padding:90px 15px;
+  width:100%;
 }
-.badges {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+
+.badges{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
 }
 
 .badges span{
@@ -205,29 +195,6 @@ nav a:hover{
 }
 
 /* =========================
-   PARTNER LOGOS
-========================= */
-.partner-logos{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
-  gap:20px;
-}
-
-.partner-card{
-  background:#fff;
-  padding:20px;
-  border-radius:10px;
-  text-align:center;
-  box-shadow:0 4px 10px rgba(0,0,0,0.08);
-}
-
-.partner-card img{
-  max-width:90px;   /* CO-PARTNER LOGO SIZE */
-  height:45px;
-  object-fit:contain;
-}
-
-/* =========================
    CONTACT
 ========================= */
 .contact-grid{
@@ -258,6 +225,36 @@ input, textarea{
 }
 
 /* =========================
+   LOCATIONS
+========================= */
+.locations-section{
+  background:#0f4c81;
+  color:#fff;
+  padding:40px 20px;
+}
+
+.locations-section h2{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.locations-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));
+  gap:2px;
+}
+
+.locations-grid ul{
+  list-style:none;
+  padding:0;
+}
+
+.locations-grid li{
+  font-size:14px;
+  padding:4px 0;
+}
+
+/* =========================
    FOOTER
 ========================= */
 .footer{
@@ -267,212 +264,75 @@ input, textarea{
   padding:16px;
 }
 
+.footer-line{
+  display:inline-block;
+  border:1px solid rgba(255,255,255,0.4);
+  padding:8px 88px;
+  border-radius:999px;
+  font-size:14px;
+}
+
 /* =========================
-   LOADER
+   SCROLL OFFSET FIX
 ========================= */
-.lang-loader{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.6);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
-}
-
-.spinner{
-  width:40px;
-  height:40px;
-  border:4px solid #ddd;
-  border-top:4px solid #0f4c81;
-  border-radius:50%;
-  animation:spin 1s linear infinite;
-}
-
-@keyframes spin{
-  to{ transform:rotate(360deg); }
-}
-
-/* ===== FIX FOR NAVBAR OVERLAP ON ANCHOR SCROLL ===== */
 #hero,
 #about,
 #services,
 #contact{
-  scroll-margin-top: 170px; /* navbar height ke barabar */
+  scroll-margin-top:170px;
 }
-
-
-
-
-.locations-section {
-  background: #0b1a3a;
-  color: #ffffff;
-  padding: 60px 8%;
-}
-
-.locations-section h2 {
-  font-size: 20px;
-  margin-bottom: 30px;
-  letter-spacing: 1px;
-  color: #b9c6ff;
-}
-
-.locations-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 30px;
-}
-
-.locations-grid ul {
-  list-style: none;
-  padding: 0;
-}
-
-.locations-grid ul li {
-  font-size: 14px;
-  margin-bottom: 10px;
-  color: #d6dcff;
-  cursor: pointer;
-}
-
-.locations-grid ul li:hover {
-  color: #ffffff;
-  text-decoration: underline;
-}
-
-@media (max-width: 768px) {
-
-  header {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  nav {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .hero h1 {
-    font-size: 24px;
-    text-align: center;
-  }
-
-  .hero p {
-    font-size: 14px;
-    text-align: center;
-  }
-
-  .partners {
-    flex-direction: column;
-  }
-}
-.locations-section {
-  background:  #0f4c81;
-  padding: 40px 20px;
-}
-
-.locations-section h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.locations-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16px, 1fr));
-  gap: 20px;
-}
-
-.locations-grid ul {
-  list-style: none;
-  padding: 0;
-}
-
-.locations-grid li {
-  font-size: 14px;
-  padding: 4px 0;
-}
-.footer-line {
-  display: inline-block;
-  background: transparent;
-  color: #ffffff;
-  padding: 8px 18px;
-  border-radius: 999px;           /* nav jaisa pill */
-  font-size: 14px;
-  font-weight: 500;
-  border: 1px solid rgba(255,255,255,0.4);
-  transition: all 0.3s ease;
-  cursor: default;
-}
-
 
 /* =========================
-   MOBILE RESPONSIVE FIX
+   MOBILE RESPONSIVE (FINAL FIX)
 ========================= */
-@media (max-width: 768px) {
+@media (max-width:768px){
 
-  body {
-    overflow-x: hidden;
+  body{
+    overflow-x:hidden;
   }
 
-  /* HEADER */
-  header, .nav, .navbar {
-    flex-direction: column;
-    text-align: center;
-    padding: 10px;
+  .nav{
+    flex-direction:column;
+    height:auto;
+    padding:10px 0;
   }
 
-  .logo img {
-    max-width: 120px;
-    margin-bottom: 8px;
+  nav{
+    flex-wrap:wrap;
+    justify-content:center;
   }
 
-  nav a {
-    display: block;
-    margin: 8px 0;
-    font-size: 16px;
+  nav a{
+    display:block;
+    margin:6px;
+    font-size:16px;
   }
 
-  /* HERO SECTION */
-  .hero {
-    padding: 30px 15px;
+  .logo img{
+    width:120px;
   }
 
-  .hero h1 {
-    font-size: 22px;
-    line-height: 1.3;
+  .hero{
+    padding:30px 15px;
   }
 
-  .hero p {
-    font-size: 14px;
+  .hero h1{
+    font-size:22px;
   }
 
-  /* CONTACT SECTION */
-  .contact-container {
-    flex-direction: column;
-    padding: 15px;
+  .hero p{
+    font-size:14px;
   }
 
-  .contact-info, 
-  .contact-form {
-    width: 100%;
+  .contact-grid{
+    grid-template-columns:1fr;
   }
 
-  .contact-form input,
-  .contact-form textarea,
-  .contact-form button {
-    width: 100%;
-    margin-bottom: 10px;
+  .grid{
+    grid-template-columns:1fr;
   }
 
-  /* SERVICES */
-  .services {
-    grid-template-columns: 1fr;
-  }
-
-  /* FOOTER */
-  footer {
-    text-align: center;
-    padding: 20px;
-    font-size: 14px;
+  .locations-grid{
+    grid-template-columns:1fr 1fr;
   }
 }
