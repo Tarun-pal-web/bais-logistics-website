@@ -168,7 +168,9 @@
 
 <!-- ================= SCRIPTS ================= -->
 <script src="script.js"></script>
-
+/* ===============================
+   ADMIN LOGIN CHECK
+================================ */
 <script>
 /* ===============================
    ADMIN LOGIN CHECK
@@ -182,12 +184,11 @@ if (user && pass) {
 }
 
 /* ===============================
-   CONTACT FORM SUBMIT (FIXED)
+   CONTACT FORM SUBMIT (FINAL FIX)
 ================================ */
-document.getElementById("contactForm").addEventListener("submit", async (e) => {
+document.getElementById("contactForm").addEventListener("submit", (e) => {
   e.preventDefault();
 
-  // ✅ CORRECT INPUT FETCH
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
   const pickup = document.getElementById("pickup").value.trim();
@@ -199,18 +200,8 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
     return;
   }
 
-  const data = { name, phone, pickup, drop, message };
-
-  try {
-    // 1️⃣ SAVE TO BACKEND
-    await fetch("https://bais-logistics-website.onrender.com/api/enquiry", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-
-    // 2️⃣ SEND TO WHATSAPP
-    const text = 
+  /* ✅ WhatsApp URL pehle bana */
+  const text =
 `🚛 *New Transport Enquiry*
 
 👤 Name: ${name}
@@ -219,20 +210,23 @@ document.getElementById("contactForm").addEventListener("submit", async (e) => {
 🏁 Drop: ${drop || "-"}
 📦 Cargo: ${message || "-"}`;
 
-    window.open(
-      "https://wa.me/919644344044?text=" + encodeURIComponent(text),
-      "_blank"
-    );
+  const whatsappURL =
+    "https://wa.me/919644344044?text=" +
+    encodeURIComponent(text);
 
-    alert("✅ Enquiry sent successfully");
-    e.target.reset();
+  /* ✅ POPUP ALLOWED (user click ke andar) */
+  window.open(whatsappURL, "_blank");
 
-  } catch (err) {
-    alert("❌ Server error");
-    console.error(err);
-  }
+  /* ✅ BACKEND SAVE (background me) */
+  fetch("https://bais-logistics-website.onrender.com/api/enquiry", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, phone, pickup, drop, message })
+  }).catch(err => console.error(err));
+
+  alert("✅ Enquiry sent successfully");
+  e.target.reset();
 });
 </script>
-
 </body>
 </html>
