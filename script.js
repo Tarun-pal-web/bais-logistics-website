@@ -17,11 +17,19 @@ const translations = {
     heroSub: "📍 Indore, Madhya Pradesh | ✓ Verified Transporter",
 
     // ABOUT
+    
+  en: {
     aboutTitle: "About Bais Express Logistics",
-    aboutText:
-      "Bais Express Logistics is a trusted and growing transport & logistics company based in Indore, Madhya Pradesh. We specialize in providing safe, timely, and cost-effective transportation solutions for businesses across India. With a strong network of verified drivers, modern vehicles, and experienced logistics professionals, we ensure smooth movement of goods for full truck load (FTL), part load (PTL), container transport, and heavy vehicle services. Our commitment to transparency, reliability, and customer satisfaction makes us a preferred logistics partner for many leading companies nationwide.",
-      serviceText:
-      " We provide reliable, fast, and cost-effective logistics solutions across India. Our wide range of transport services is designed to meet the needs of businesses of all sizes, ensuring safe and timely delivery of goods.", partnersTitle: "Our Associated Partners",
+    aboutText: "Bais Express Logistics is a trusted and growing transport & logistics company based in Indore, providing reliable, fast, and cost-effective logistics solutions across India. We specialize in safe and timely transportation solutions for businesses of all sizes. With a strong network of verified drivers, modern vehicles, and experienced logistics professionals, we ensure smooth movement of goods for Full Truck Load (FTL), Part Load (PTL), and container transport services. Our commitment to transparency, reliability, and customer satisfaction makes us a preferred logistics partner nationwide.",
+    servicesDesc: "We provide reliable, fast, and cost-effective logistics solutions across India. Our wide range of transport services is designed to meet the needs of businesses of all sizes, ensuring safe and timely delivery of goods."
+  },
+
+  hi: {
+    aboutTitle: "Bais Express Logistics के बारे में",
+    aboutText: "Bais Express Logistics इंदौर में स्थित एक विश्वसनीय और तेजी से बढ़ती ट्रांसपोर्ट एवं लॉजिस्टिक्स कंपनी है, जो पूरे भारत में सुरक्षित, तेज़ और किफायती लॉजिस्टिक्स सेवाएं प्रदान करती है। हम सभी आकार के व्यवसायों के लिए समय पर और सुरक्षित परिवहन समाधान प्रदान करते हैं। अनुभवी ड्राइवरों, आधुनिक वाहनों और मजबूत नेटवर्क के साथ, हम फुल ट्रक लोड (FTL), पार्ट लोड (PTL) और कंटेनर ट्रांसपोर्ट सेवाएं उपलब्ध कराते हैं। हमारी विश्वसनीयता, पारदर्शिता और ग्राहक संतुष्टि हमें देशभर में एक पसंदीदा लॉजिस्टिक्स पार्टनर बनाती है।",
+    servicesDesc: "हम पूरे भारत में भरोसेमंद, तेज़ और किफायती लॉजिस्टिक्स समाधान प्रदान करते हैं। हमारी सेवाएं सभी प्रकार के व्यवसायों की जरूरतों को ध्यान में रखकर डिजाइन की गई हैं, जिससे सामान सुरक्षित और समय पर डिलीवर किया जा सके।"
+  },
+     partnersTitle: "Our Associated Partners",
 
     // SERVICES
     servicesTitle: "Our Services",
@@ -49,12 +57,6 @@ const translations = {
     heroTitle: "पूरे भारत में विश्वसनीय परिवहन और लॉजिस्टिक्स सेवाएं",
     heroSub: "📍 इंदौर, मध्य प्रदेश | ✓ सत्यापित ट्रांसपोर्टर",
 
-    // ABOUT
-    aboutTitle: "Bais Express Logistics के बारे में",
-    aboutText:
-      "Bais Express Logistics इंदौर, मध्य प्रदेश स्थित एक विश्वसनीय और तेजी से बढ़ती हुई ट्रांसपोर्ट एवं लॉजिस्टिक्स कंपनी है। हम पूरे भारत में सुरक्षित, समय पर और किफायती परिवहन सेवाएं प्रदान करते हैं। हमारे पास सत्यापित ड्राइवरों का मजबूत नेटवर्क, आधुनिक वाहन और अनुभवी लॉजिस्टिक्स टीम है, जो फुल ट्रक लोड (FTL), पार्ट लोड (PTL), कंटेनर ट्रांसपोर्ट और हेवी व्हीकल सेवाओं के लिए माल की सुचारू डिलीवरी सुनिश्चित करती है। पारदर्शिता, भरोसे और ग्राहक संतुष्टि के प्रति हमारी प्रतिबद्धता हमें देशभर की कई प्रमुख कंपनियों का पसंदीदा लॉजिस्टिक्स पार्टनर बनाती है।",
-      serviceText:
-      "हम पूरे भारत में विश्वसनीय, तेज़ और किफायती लॉजिस्टिक्स समाधान प्रदान करते हैं। हमारी परिवहन सेवाओं की विस्तृत श्रृंखला सभी आकार के व्यवसायों की आवश्यकताओं को ध्यान में रखकर तैयार की गई है,जिससे माल की सुरक्षित और समय पर डिलीवरी सुनिश्चित होती है।",
     partnersTitle: "हमारे सहयोगी भागीदार",
 
     // SERVICES
