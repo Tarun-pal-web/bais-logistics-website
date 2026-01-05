@@ -640,3 +640,76 @@ input, textarea {
   font-size: 15px;
   line-height: 1.2;
 }
+
+/* ================================
+   MOBILE RESPONSIVE FIX (FINAL)
+================================ */
+
+/* HERO SECTION FIX */
+@media (max-width: 768px) {
+  .hero,
+  .hero-section {
+    height: auto !important;
+    min-height: auto !important;
+    padding: 40px 16px 30px;
+  }
+
+  .hero-content {
+    padding-bottom: 20px;
+  }
+}
+
+/* VERIFIED / GST / PAN INDIA BUTTONS */
+@media (max-width: 768px) {
+  .badge,
+  .pill,
+  .tag {
+    font-size: 14px;
+    padding: 8px 14px;
+    margin: 6px 4px;
+    border-radius: 20px;
+  }
+}
+
+/* ABOUT SECTION SPACING FIX */
+@media (max-width: 768px) {
+  #about,
+  .about-section {
+    margin-top: 20px;
+    padding-top: 20px;
+  }
+
+  #about p {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}
+
+/* SERVICES SECTION GAP FIX */
+@media (max-width: 768px) {
+  #services,
+  .services-section {
+    margin-top: 20px;
+    padding-top: 10px;
+  }
+
+  .service-card {
+    margin-bottom: 14px;
+  }
+}
+
+/* GENERAL MOBILE CLEANUP */
+@media (max-width: 768px) {
+  section {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+}
