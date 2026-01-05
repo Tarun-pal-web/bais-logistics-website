@@ -514,3 +514,12 @@ input, textarea {
 .lang-switch:hover .lang-popup {
   display: block;
 }
+.contact-form {
+  position: relative;
+  z-index: 10;
+}
+
+.contact-form button {
+  pointer-events: auto;
+  cursor: pointer;
+}
