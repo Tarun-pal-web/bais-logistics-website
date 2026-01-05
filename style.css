@@ -122,11 +122,12 @@ nav a:hover {
 }
 
 .card {
-  background: #fff;
+  background: #0f4c81;   /* 🔵 New background (dark blue / slate) */
   padding: 22px;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   text-align: center;
+  color: #ffffff;        /* ✅ Text white */
 }
 
 /* =========================
