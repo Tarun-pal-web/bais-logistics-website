@@ -574,3 +574,20 @@ input, textarea {
   color: #ffffff;
   margin-bottom: 30px;
 }
+.locations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 24px;
+  text-align: center;
+}
+
+.locations-grid ul {
+  list-style: none;
+  padding: 0;
+}
+
+.locations-grid li {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #ffffff;
+}
