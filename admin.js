@@ -25,19 +25,22 @@ async function loadEnquiries() {
     else pending++;
 
     tbody.innerHTML += `
-      <tr>
-        <td>${enq.name}</td>
-        <td>${enq.phone}</td>
-        <td>${enq.pickup || "-"}</td>
-        <td>${enq.drop_location || "-"}</td>
-        <td>${enq.status}</td>
-        <td>
-          ${enq.status === "Pending"
-            ? `<button onclick="markComplete('${enq.id}')">✔</button>`
-            : "✅"}
-          <button onclick="deleteEnquiry('${enq.id}')">🗑</button>
-        </td>
-      </tr>`;
+<tr>
+  <td>${enq.name}</td>
+  <td>${enq.phone}</td>
+  <td>${enq.pickup || "-"}</td>
+  <td>${enq.drop_location || "-"}</td>
+  <td>${enq.message || "-"}</td>   <!-- ✅ CARGO ADDED -->
+  <td>${enq.status}</td>
+  <td>
+    ${
+      enq.status === "Pending"
+        ? `<button onclick="markComplete('${enq.id}')">✓</button>`
+        : "✅"
+    }
+    <button onclick="deleteEnquiry('${enq.id}')">🗑</button>
+  </td>
+</tr>`;
   });
 
   document.getElementById("totalEnq").innerText = total;
