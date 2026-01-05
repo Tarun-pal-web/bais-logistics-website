@@ -170,7 +170,9 @@
 <script src="script.js"></script>
 
 <script>
-/* ADMIN LOGIN CHECK */
+/* ===============================
+   ADMIN LOGIN CHECK
+================================ */
 const user = localStorage.getItem("user");
 const pass = localStorage.getItem("pass");
 
@@ -179,32 +181,43 @@ if (user && pass) {
   document.getElementById("loginLink").style.display = "none";
 }
 
-/* CONTACT FORM SUBMIT */
+/* ===============================
+   CONTACT FORM SUBMIT (FIXED)
+================================ */
 document.getElementById("contactForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const name = name.value;
-  const phone = phone.value;
-  const pickup = pickup.value;
-  const drop = drop.value;
-  const message = message.value;
+  // ✅ CORRECT INPUT FETCH
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const pickup = document.getElementById("pickup").value.trim();
+  const drop = document.getElementById("drop").value.trim();
+  const message = document.getElementById("message").value.trim();
+
+  if (!name || !phone) {
+    alert("❌ Name aur Phone required hai");
+    return;
+  }
 
   const data = { name, phone, pickup, drop, message };
 
   try {
+    // 1️⃣ SAVE TO BACKEND
     await fetch("https://bais-logistics-website.onrender.com/api/enquiry", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     });
 
-    const text =
-`🚛 New Transport Enquiry
-Name: ${name}
-Phone: ${phone}
-Pickup: ${pickup}
-Drop: ${drop}
-Cargo: ${message}`;
+    // 2️⃣ SEND TO WHATSAPP
+    const text = 
+`🚛 *New Transport Enquiry*
+
+👤 Name: ${name}
+📞 Phone: ${phone}
+📍 Pickup: ${pickup || "-"}
+🏁 Drop: ${drop || "-"}
+📦 Cargo: ${message || "-"}`;
 
     window.open(
       "https://wa.me/919644344044?text=" + encodeURIComponent(text),
@@ -213,8 +226,10 @@ Cargo: ${message}`;
 
     alert("✅ Enquiry sent successfully");
     e.target.reset();
-  } catch {
+
+  } catch (err) {
     alert("❌ Server error");
+    console.error(err);
   }
 });
 </script>
