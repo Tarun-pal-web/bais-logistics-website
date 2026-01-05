@@ -524,3 +524,45 @@ input, textarea {
   pointer-events: auto;
   cursor: pointer;
 }
+
+/* ===== BADGES ROW ===== */
+.badges {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+/* COMMON BADGE */
+.badge {
+  background: #ffffff;
+  border-radius: 999px;
+  padding: 10px 18px;
+  min-height: 44px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+/* GST GROUP (center wala) */
+.badge-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* GSTIN BELOW LINE */
+.gstin-below {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f4c81;
+  background: #ffffff;
+  padding: 6px 14px;
+  border-radius: 999px;
+}
