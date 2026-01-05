@@ -33,7 +33,7 @@ const translations = {
     locationsTitle: "ONLINE TRUCK BOOKING IN",
 
     // FOOTER
-    footerText: "© 2025 Bais Express Logistics | All Rights Reserved"
+    footerText: "© 2019 Bais Express Logistics | All Rights Reserved"
   },
 
   hi: {
