@@ -566,3 +566,11 @@ input, textarea {
   padding: 6px 14px;
   border-radius: 999px;
 }
+
+.service-heading {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 30px;
+}
