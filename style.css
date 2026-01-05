@@ -713,3 +713,36 @@ input, textarea {
     font-size: 20px;
   }
 }
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.badge {
+  background: #ffffff;
+  color: #0b3c5d;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* 📱 Mobile specific */
+@media (max-width: 600px) {
+  .badges {
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .badge {
+    flex: 0 0 calc(50% - 12px); /* 🔑 2 badges per row */
+    text-align: center;
+    font-size: 13px;
+    padding: 10px 8px;
+  }
+}
