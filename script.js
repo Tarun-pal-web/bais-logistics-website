@@ -10,7 +10,7 @@ const translations = {
     navAbout: "About",
     navServices: "Services",
     navContact: "Contact",
-    navLogin: "Login",
+    navLogin: "Dashboard",
 
     // HERO
     heroTitle: "Trusted Transport & Logistics Services Across India",
@@ -42,7 +42,7 @@ const translations = {
     navAbout: "हमारे बारे में",
     navServices: "सेवाएं",
     navContact: "संपर्क करें",
-    navLogin: "लॉगिन",
+    navLogin: "डैशबोर्ड",
 
     // HERO
     heroTitle: "पूरे भारत में विश्वसनीय परिवहन और लॉजिस्टिक्स सेवाएं",
@@ -65,7 +65,7 @@ const translations = {
     locationsTitle: "ऑनलाइन ट्रक बुकिंग",
 
     // FOOTER
-    footerText: "© 2025 Bais Express Logistics | सर्वाधिकार सुरक्षित"
+    footerText: "© 2019 Bais Express Logistics | सर्वाधिकार सुरक्षित"
   }
 };
 
