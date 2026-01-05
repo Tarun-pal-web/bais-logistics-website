@@ -19,8 +19,9 @@ const translations = {
     // ABOUT
     aboutTitle: "About Bais Express Logistics",
     aboutText:
-      "Bais Express Logistics is a trusted transport company based in Indore, providing reliable logistics services across India.",
-    partnersTitle: "Our Associated Partners",
+      "Bais Express Logistics is a trusted and growing transport & logistics company based in Indore, Madhya Pradesh. We specialize in providing safe, timely, and cost-effective transportation solutions for businesses across India. With a strong network of verified drivers, modern vehicles, and experienced logistics professionals, we ensure smooth movement of goods for full truck load (FTL), part load (PTL), container transport, and heavy vehicle services. Our commitment to transparency, reliability, and customer satisfaction makes us a preferred logistics partner for many leading companies nationwide.",
+      serviceText:
+      " We provide reliable, fast, and cost-effective logistics solutions across India. Our wide range of transport services is designed to meet the needs of businesses of all sizes, ensuring safe and timely delivery of goods.", partnersTitle: "Our Associated Partners",
 
     // SERVICES
     servicesTitle: "Our Services",
@@ -51,11 +52,15 @@ const translations = {
     // ABOUT
     aboutTitle: "Bais Express Logistics के बारे में",
     aboutText:
-      "Bais Express Logistics इंदौर स्थित एक विश्वसनीय परिवहन कंपनी है, जो पूरे भारत में लॉजिस्टिक्स सेवाएं प्रदान करती है।",
+      "Bais Express Logistics इंदौर, मध्य प्रदेश स्थित एक विश्वसनीय और तेजी से बढ़ती हुई ट्रांसपोर्ट एवं लॉजिस्टिक्स कंपनी है। हम पूरे भारत में सुरक्षित, समय पर और किफायती परिवहन सेवाएं प्रदान करते हैं। हमारे पास सत्यापित ड्राइवरों का मजबूत नेटवर्क, आधुनिक वाहन और अनुभवी लॉजिस्टिक्स टीम है, जो फुल ट्रक लोड (FTL), पार्ट लोड (PTL), कंटेनर ट्रांसपोर्ट और हेवी व्हीकल सेवाओं के लिए माल की सुचारू डिलीवरी सुनिश्चित करती है। पारदर्शिता, भरोसे और ग्राहक संतुष्टि के प्रति हमारी प्रतिबद्धता हमें देशभर की कई प्रमुख कंपनियों का पसंदीदा लॉजिस्टिक्स पार्टनर बनाती है।",
+      serviceText:
+      "हम पूरे भारत में विश्वसनीय, तेज़ और किफायती लॉजिस्टिक्स समाधान प्रदान करते हैं। हमारी परिवहन सेवाओं की विस्तृत श्रृंखला सभी आकार के व्यवसायों की आवश्यकताओं को ध्यान में रखकर तैयार की गई है,जिससे माल की सुरक्षित और समय पर डिलीवरी सुनिश्चित होती है।",
     partnersTitle: "हमारे सहयोगी भागीदार",
 
     // SERVICES
     servicesTitle: "हमारी सेवाएं",
+
+    
 
     // CONTACT
     contactTitle: "संपर्क करें",
@@ -101,3 +106,5 @@ function applyLanguage(lang) {
       el.innerText;
   });
 }
+
+
